@@ -150,3 +150,5 @@ export async function generateStaticParams() {
   });
 }
 ```
+
+## Oauth - Check out diagram
