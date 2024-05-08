@@ -114,6 +114,11 @@ async function createSnippet(formData: FormData) {
 - NextJS provides a built-in 404 page
 - In this case we put it in the [id] directory this will be the 404 page for the snippets, next js finds the closest 404 page to the route
 
+## Loading
+
+- NextJS provides a built-in loading component that can be used to show a loading spinner while the page is loading
+- Same thing as Not Found, we put it in the [id] directory this will be the loading page for the snippets, next js finds the closest loading page to the route
+
 ## Redirect()
 
 - Do not put these in try catch blocks because the catch block will think the redirect is an error
@@ -126,17 +131,31 @@ async function createSnippet(formData: FormData) {
   3. Request Memoization
   4. Full Route Cache -> Default caching behavior
 
-```jsx
-export const dynamicRoute = 'force-dynamic'
-```
-
 ### Control caching
 
 - Time base caching: stale-while-revalidate
 - On Demand caching: Forcibly purge a cached response
 - Disable caching: Do not do any caching
+- You can check the cache-control header in the network tab in the browser
+- NextJS you can force a route to be dynamic by adding the following to the file
+  - export const dynamicRoute = 'force-dynamic'
+
+- 1 Hour caching ex.
+
+```jsx
+  export const getServerSideProps = async (context) => {
+    return {
+      props: {
+        snippets,
+      },
+      revalidate: 3600,
+    };
+  };
+```
 
 ### generateStaticParams()
+
+- Used to generate static paths for dynamic routes, for example if you have a dynamic route that is based on a database you can use this function to generate the paths (check out the code below that we used to generate the paths for the snippets in the database 0 get the id of each snippet)
 
 ```jsx
 // Only happens in production
@@ -151,4 +170,4 @@ export async function generateStaticParams() {
 }
 ```
 
-## Oauth - Check out diagram
+## Implementing Oauth - Check out diagram in OneNote
