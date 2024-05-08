@@ -1,7 +1,12 @@
 "use server";
 
+import type { Topic } from "@prisma/client";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { auth } from "@/auth";
+import paths from "@/path";
+import { prisma } from "@/db";
+import { revalidatePath } from "next/cache";
 
 const createTopicSchema = z.object({
   name: z
@@ -45,7 +50,32 @@ export async function createTopic(
     };
   }
 
-  return {
-    errors: {},
-  };
+  let topic: Topic;
+  try {
+    topic = await prisma.topic.create({
+      data: {
+        slug: result.data.name,
+        description: result.data.description,
+      },
+    });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return {
+        errors: {
+          _form: [err.message],
+        },
+      };
+    } else {
+      return {
+        errors: {
+          _form: [
+            "An error occurred while creating the topic in createTopic() action",
+          ],
+        },
+      };
+    }
+  }
+
+  revalidatePath("/");
+  redirect(paths.topicShowPath(topic.slug));
 }
