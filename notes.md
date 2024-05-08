@@ -183,3 +183,21 @@ export async function generateStaticParams() {
 ```
 
 ## Implementing Oauth - Check out diagram in OneNote
+
+## Why is / showing up as dynamic route in the build output?
+
+```md
+┌ λ /                                    148 B          84.6 kB
+├ λ /_not-found                          870 B          85.3 kB
+├ λ /api/auth/[...nextauth]              0 B                0 B
+├ λ /topics/[slug]                       148 B          84.6 kB
+├ λ /topics/[slug]/posts/[postId]        148 B          84.6 kB
+└ λ /topics/[slug]/posts/new             148 B          84.6 kB
++ First Load JS shared by all            84.5 kB
+  ├ chunks/472-32f0eb17436428b8.js       29.2 kB
+  ├ chunks/fd9d1056-457a8107954bcc1e.js  53.3 kB
+  ├ chunks/main-app-089614cbb082edf9.js  218 B
+  └ chunks/webpack-d4dd01fad3bcece4.js   1.72 kB
+```
+
+- The reason because in our codebase we have a <Header /> component that encapsulates all of the pages in our app, due to this all routes will be considered dynamic routes because the header is on all pages
