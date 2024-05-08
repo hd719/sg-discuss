@@ -134,6 +134,18 @@ async function createSnippet(formData: FormData) {
 ### Control caching
 
 - Time base caching: stale-while-revalidate
+
+```jsx
+  export const revalidate = 60; // 1 minute 
+  export const getServerSideProps = async (context) => {
+    return {
+      props: {
+        snippets,
+      },
+    };
+  };
+```
+
 - On Demand caching: Forcibly purge a cached response
 - Disable caching: Do not do any caching
 - You can check the cache-control header in the network tab in the browser
