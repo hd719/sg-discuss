@@ -60,7 +60,33 @@ export async function createPost(
     };
   }
 
-  return {
-    errors: {},
-  };
+  let post: Post;
+  try {
+    post = await prisma.post.create({
+      data: {
+        title: result.data.title,
+        content: result.data.content,
+        userId: session.user.id,
+        topicId: topic.id,
+      },
+    });
+  } catch (err: unknown) {
+    console.error("Error creating post", err);
+    if (err instanceof Error) {
+      return {
+        errors: {
+          _form: [err.message],
+        },
+      };
+    } else {
+      return {
+        errors: {
+          _form: ["Error creating post"],
+        },
+      };
+    }
+  }
+
+  revalidatePath(paths.topicShowPath(slug));
+  redirect(paths.postShow(slug, post.id.toString()));
 }
