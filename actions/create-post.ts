@@ -22,6 +22,7 @@ interface CreatePostFormState {
 }
 
 export async function createPost(
+  slug: string,
   formState: CreatePostFormState,
   formData: FormData
 ): Promise<CreatePostFormState> {
@@ -42,6 +43,20 @@ export async function createPost(
   if (!result.success) {
     return {
       errors: result.error.flatten().fieldErrors,
+    };
+  }
+
+  const topic = await prisma.topic.findUnique({
+    where: {
+      slug,
+    },
+  });
+
+  if (!topic) {
+    return {
+      errors: {
+        _form: ["Topic not found"],
+      },
     };
   }
 
