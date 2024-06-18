@@ -12,18 +12,21 @@ pnpm dev
 bun dev
 ```
 
-- Create a `.env.local` file and add
+- Create a `.env.local` file and add (do not version control)
 
 ```
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-
+GITHUB_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+AUTH_SECRET=
 ```
 - In order to run this project make sure you on node version `v21.6.2 `
 - Run in dev mode
 
-```sh 
+```sh
 nvm use node 21.6.2
 pnpm install
 pnpm run dev
+
+npx prisma generate
 ```
+
