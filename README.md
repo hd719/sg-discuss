@@ -29,4 +29,3 @@ pnpm run dev
 
 npx prisma generate
 ```
-
