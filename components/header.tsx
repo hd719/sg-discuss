@@ -20,9 +20,6 @@ export default async function Header() {
       </NavbarBrand>
       <NavbarContent justify="center">
         <NavbarItem>
-          <Input placeholder="Search" />
-        </NavbarItem>
-        <NavbarItem>
           <SearchInput />
         </NavbarItem>
       </NavbarContent>
