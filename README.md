@@ -22,10 +22,11 @@ AUTH_SECRET=
 - In order to run this project make sure you on node version `v21.6.2 `
 - Run in dev mode
 
+- App uses 1password for secrets management to the run app use this cmd: `op run -- pnpm run dev`
+
 ```sh
 nvm use node 21.6.2
 pnpm install
 pnpm run dev
-
 npx prisma generate
 ```
